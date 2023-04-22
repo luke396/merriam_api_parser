@@ -24,7 +24,7 @@ class JsonParser:
         ] = defaultdict()  # sense with number as key
         self._parse_sseq()
 
-    def _parse_sseq(self):
+    def _parse_sseq(self) -> None:
         for sense in self._sseq:
             single_sense: list[str | dict[str, str | Any]]
             for single_sense in sense:
@@ -91,4 +91,3 @@ class JsonParser:
 FILE = "src/voluminous.json"
 if __name__ == "__main__":
     case = JsonParser(FILE)
-    # s = case.sense
