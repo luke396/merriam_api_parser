@@ -2,6 +2,9 @@
 from collections import defaultdict
 import json
 from typing import Any
+from merriam_api.formatter import TextTokenFormatter
+
+# TODO: may be create a NewType for json data
 
 
 class JsonParser:
@@ -9,11 +12,15 @@ class JsonParser:
     """
 
     def __init__(self, json_file: str) -> None:
+        self.token_parser = TextTokenFormatter()
+
         with open(json_file, 'r', encoding="UTF-8") as data:
-            self._data = json.load(data)
+            self._data: dict[str, Any] = json.load(data)
         self._def: dict[str, Any] = self._data['def'][0]  # definition section
         self._sseq: list[Any] = self._def.get('sseq', None)  # sense sequence
         self._vb: str = self._def.get('vb', None)  # verb divider
+        self.sense: defaultdict[str, defaultdict[str, Any]
+                                ] = defaultdict()  # sense with number as key
         self._parse_sseq()
 
     def _parse_sseq(self):
@@ -22,9 +29,11 @@ class JsonParser:
             for single_sense in sense:
                 single_ele: defaultdict[str, Any] = self._parse_single_sense(
                     single_sense)
-                sn: str = single_ele['sn']  # sense number
-                dt: defaultdict[str, Any] = self._parse_dt(
+                sense_number: str = single_ele['sn']  # sense number
+                definition_text: defaultdict[str, Any] = self._parse_dt(
                     single_ele['dt'])  # definition text
+                self.sense[sense_number] = definition_text
+                self.token_parser.parse_token(definition_text['text'])
 
     def _parse_single_sense(
         self, single_sense: list[str | dict[str, Any]]
@@ -78,12 +87,8 @@ class JsonParser:
             ele.append(single[1])
         return defaultdict(str, zip(names, ele))
 
-    def _filtter_text(self):
-        """Remove tags to get the text."""
-        # TODO: maybe remain some tag to make it more readable
-        pass
 
-
-NAME = 'src/voluminous.json'
+FILE = 'src/voluminous.json'
 if __name__ == "__main__":
-    JsonParser(NAME)
+    case = JsonParser(FILE)
+    # s = case.sense
