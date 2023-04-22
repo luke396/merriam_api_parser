@@ -4,8 +4,7 @@ import re
 
 
 class TextTokenFormatter:
-    """Format a token from text and return needed data.
-    """
+    """Format a token from text and return needed data."""
 
     def __init__(self) -> None:
         self.base_url = "https://www.merriam-webster.com/dictionary/"
@@ -14,8 +13,7 @@ class TextTokenFormatter:
         self._parse_url(text)
 
     def _parse_url(self, text: str):
-        """Convert {a_link|word} to md-format-url.
-        """
+        """Convert {a_link|word} to md-format-url."""
         pattern = r"{(a_link)\|(\w+)}"
         matches: list[str] = re.findall(pattern, text)
         for match in matches:
