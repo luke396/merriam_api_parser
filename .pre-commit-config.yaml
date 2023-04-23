@@ -27,3 +27,13 @@ repos:
         language: python
         types_or: [python, pyi]
         additional_dependencies: [black==23.3.0]
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        files: ^merriam_api_parser/
+        args: [
+            "-rn", # Only display messages
+            --errors-only,
+          ]

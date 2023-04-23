@@ -1,69 +1,34 @@
-[project]
-name = 'merriam_api_parser'
-description = "A Python library for parsing Merriam-Webster's Dictionary API responses."
-requires-python = '==3.11'
-dynamic = ['version']
-readme = "README.md"
-license = { file = "LICENSE" }
-dependencies = []
-
 [tool.ruff]
 line-length = 88
-update-check = false
 target-version = "py311"
 fix = true
-unfixable = []
-select = ["E", "F"]
-ignore = []
-fixable = [
-  "A",
-  "B",
-  "D",
-  "E",
+select = [
+  # pyflakes
   "F",
-  "G",
-  "I",
-  "N",
-  "Q",
-  "S",
+  # pycodestyle
+  "E",
   "W",
-  "ANN",
-  "ARG",
-  "BLE",
-  "COM",
-  "DJ",
-  "DTZ",
-  "EM",
-  "ERA",
-  "EXE",
-  "FBT",
-  "ICN",
-  "INP",
-  "ISC",
-  "NPY",
-  "PD",
-  "PGH",
-  "PIE",
-  "PL",
-  "PT",
-  "PTH",
-  "PYI",
-  "RET",
-  "RSE",
-  "RUF",
-  "SIM",
-  "SLF",
-  "TCH",
-  "TID",
-  "TRY",
-  "UP",
+  # flake8-2020
   "YTT",
+  # flake8-bugbear
+  "B",
+  # flake8-quotes
+  "Q",
+  # pylint
+  "PLE",
+  "PLR",
+  "PLW",
+  # misc lints
+  "PIE",
+  # flake8-pyi
+  "PYI",
+  # tidy imports
+  "TID",
+  # implicit string concatenation
+  "ISC",
+  # type-checking imports
+  "TCH",
 ]
-exclude = [".git", ".mypy_cache", ".ruff_cache", ".venv", "venv"]
-
-[tool.ruff.mccabe]
-max-complexity = 10
-
 [tool.black]
 target-version = ['py311']
 required-version = '23.3.0'
@@ -71,12 +36,17 @@ exclude = '''
 (
   \.venv
   | \.git
-  | setup.py
+  | \.data
 )
 '''
 
 [tool.mypy]
-files = ['merriam_api']
+mypy_path = "merriam_api_parser"
+files = ['merriam_api_parser']
 python_version = "3.11"
 warn_unused_configs = true
-check-untyped-defs = true
+check_untyped_defs = true
+
+[tool.pylint.messages_control]
+max-line-length = 88
+disable = ["unsubscriptable-object"]

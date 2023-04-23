@@ -3,7 +3,7 @@ import json
 from collections import defaultdict
 from typing import Any
 
-from merriam_api.formatter import TextTokenFormatter
+from merriam_api_parser.md_formatter import TextTokenFormatter
 
 # TODO: may be create a NewType for json data
 
@@ -26,7 +26,7 @@ class JsonParser:
 
     def _parse_sseq(self) -> None:
         for sense in self._sseq:
-            single_sense: list[str | dict[str, str | Any]]
+            single_sense: list[str | dict[str, Any]]
             for single_sense in sense:
                 single_ele: defaultdict[str, Any] = self._parse_single_sense(
                     single_sense
@@ -41,17 +41,20 @@ class JsonParser:
     def _parse_single_sense(
         self, single_sense: list[str | dict[str, Any]]
     ) -> defaultdict[str, Any]:
-        assert len(single_sense) == 2
+        assert len(single_sense) == 2  # noqa: PLR2004
         assert single_sense[0] == "sense"
-        single_sense_element: dict[str, str | Any] = single_sense[1]  # type: ignore
+        single_sense_element: dict[str, Any] = single_sense[1]  # type: ignore
         return defaultdict(
-            str, zip(single_sense_element.keys(), single_sense_element.values())
+            str,
+            zip(
+                single_sense_element.keys(), single_sense_element.values(), strict=True
+            ),
         )
 
     def _parse_dt(self, origin_dt: list[list[str | Any]]) -> defaultdict[str, Any]:
         dt_ele: defaultdict[str, Any] = self._name_ele_constructor(origin_dt)
         name = ["text", "vis"]
-        return defaultdict(str, zip(name, [dt_ele[i] for i in name]))
+        return defaultdict(str, zip(name, [dt_ele[i] for i in name], strict=True))
 
     def _name_ele_constructor(
         self, lst: list[list[str | Any]]
@@ -85,9 +88,9 @@ class JsonParser:
             assert isinstance(single[0], str)
             names.append(single[0])
             ele.append(single[1])
-        return defaultdict(str, zip(names, ele))
+        return defaultdict(str, zip(names, ele, strict=True))
 
 
-FILE = "src/voluminous.json"
+FILE = "data/voluminous.json"
 if __name__ == "__main__":
     case = JsonParser(FILE)
