@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: "v0.0.262"
+    rev: v0.0.262
     hooks:
       - id: ruff
   - repo: https://github.com/codespell-project/codespell
@@ -33,7 +33,13 @@ repos:
         language: system
         types: [python]
         files: ^merriam_api_parser/
-        args: [
-            "-rn", # Only display messages
-            --errors-only,
-          ]
+        args: [-rn, --errors-only]
+
+  - repo: https://github.com/sourcery-ai/sourcery
+    rev: v1.2.0
+    hooks:
+      - id: sourcery
+        # The best way to use Sourcery in a pre-commit hook:
+        # * review only changed lines:
+        # * omit the summary
+        args: [--diff=git diff HEAD, --no-summary, --fix]

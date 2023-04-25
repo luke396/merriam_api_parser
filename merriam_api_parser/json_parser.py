@@ -12,6 +12,7 @@ class JsonParser:
     """Parse a json file and return needed data."""
 
     def __init__(self, json_file: str) -> None:
+        """Init the class."""
         self.token_parser = TextTokenFormatter()
 
         with open(json_file, "r", encoding="UTF-8") as data:
@@ -25,6 +26,7 @@ class JsonParser:
         self._parse_sseq()
 
     def _parse_sseq(self) -> None:
+        """Parse the sseq section of the json file."""
         for sense in self._sseq:
             single_sense: list[str | dict[str, Any]]
             for single_sense in sense:
@@ -91,6 +93,11 @@ class JsonParser:
         return defaultdict(str, zip(names, ele, strict=True))
 
 
-FILE = "data/json/voluminous.json"
+def main() -> None:
+    """main for testing."""
+    file = "data/json/voluminous.json"
+    JsonParser(file)
+
+
 if __name__ == "__main__":
-    case = JsonParser(FILE)
+    main()
