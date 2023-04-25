@@ -91,6 +91,6 @@ class JsonParser:
         return defaultdict(str, zip(names, ele, strict=True))
 
 
-FILE = "data/voluminous.json"
+FILE = "data/json/voluminous.json"
 if __name__ == "__main__":
     case = JsonParser(FILE)

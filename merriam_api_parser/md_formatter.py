@@ -7,7 +7,7 @@ class TextTokenFormatter:
     """Format a token from text and return needed data."""
 
     def __init__(self) -> None:
-        self.base_url = "https://www.merriam-webster.com/dictionary/"
+        self.base_url: str = "https://www.merriam-webster.com/dictionary/"
         self.text: str = ""
 
     def parse_token(self, text: str) -> None:
@@ -19,8 +19,8 @@ class TextTokenFormatter:
 
     def _parse_bold_colon(self) -> None:
         """Convert '{bc}' to md-format ': '."""
-        pattern = r"{bc}"
-        replacement = ": "
+        pattern: str = r"{bc}"
+        replacement: str = ": "
         self.text = re.sub(pattern, replacement, self.text)
 
     def _parser_url(self) -> None:
@@ -30,7 +30,6 @@ class TextTokenFormatter:
 
     def _convert_url(self, pattern: str) -> None:
         """Convert url to md-format '\\[word](url)'."""
-
         matches: list[str] = re.findall(pattern, self.text)
         for match in matches:
             tag: str = match[0]

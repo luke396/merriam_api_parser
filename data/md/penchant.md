@@ -1,0 +1,3 @@
+[penchant (n.)](https://www.etymonline.com/word/penchant#etymonline_v_12608 "Origin and meaning of penchant")
+
+"strong inclination," 1670s, from French penchant, noun use of present participle of Old French pencher "to incline," from Vulgar Latin *pendicare, a frequentative formed from Latin pendere "to hang, cause to hang" (from PIE root [*(s)pen-](https://www.etymonline.com/word/*(s)pen-?ref=etymonline_crossreference "Etymology, meaning and definition of *(s)pen-") "to draw, stretch, spin").
