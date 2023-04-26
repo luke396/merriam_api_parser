@@ -1,6 +1,11 @@
 """Request and parse response from Merriam-Webster Collegiate Dictionary API"""
 
+import json
+from typing import Any
+
 import requests
+
+from merriam_api_parser._json_parser import JsonParser
 
 
 class RequestResponse:
@@ -8,11 +13,10 @@ class RequestResponse:
 
     def __init__(self, api_key: str) -> None:
         self.api_key: str = api_key
-        self.md_response: str = ""
 
     def parse_resonse(self, word: str) -> str:
         """Parse response to md-formated text"""
         url: str = f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word}?key={self.api_key}"  # pylint: disable=line-too-long  # noqa: E501
         response: requests.Response = requests.get(url, timeout=5)
-        self.md_response = response.text
-        return self.md_response
+        json_res: list[dict[str, Any]] = json.loads(response.text)
+        return JsonParser(json_res[0]).md_text()  # TODO: json_res[0] may be wrong

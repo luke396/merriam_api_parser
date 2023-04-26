@@ -10,12 +10,13 @@ class TextTokenFormatter:
         self.base_url: str = "https://www.merriam-webster.com/dictionary/"
         self.text: str = ""
 
-    def parse_token(self, text: str) -> None:
+    def parse_token(self, text: str) -> str:
         """Parse tokens from text and return needed data."""
         self.text = text
         self._parse_bold_colon()
         self._parser_url()
-        print(self.text)
+        # print(self.text)
+        return self.text
 
     def _parse_bold_colon(self) -> None:
         """Convert '{bc}' to md-format ': '."""

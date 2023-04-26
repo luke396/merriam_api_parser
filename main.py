@@ -11,16 +11,16 @@ DICT_REQUESTER = RequestResponse(DICT_KEY)  # type: ignore
 
 def main() -> None:
     """Main"""
-    path: str = "data/md"  # usr input
+    path: str = "data/md/"  # usr input
 
     words: list[str] = Reader(path).get_md_names(raw=False)
-    word_resonsse: dict[str, str] = {}
+    word_responses: dict[str, str] = {}
     for word in words:
         response: str = DICT_REQUESTER.parse_resonse(word)
-        word_resonsse[word] = response
+        word_responses[word] = response
 
     writer = Writer(path)
-    writer.write(word_resonsse)
+    writer.write(word_responses)
 
 
 if __name__ == "__main__":
