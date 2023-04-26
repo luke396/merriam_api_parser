@@ -1,4 +1,4 @@
-"""Main,please environment variable set MERRIAM_WEBSTER_DICTIONARY_KEY first"""
+"""Main, please set environment variable "MERRIAM_WEBSTER_DICTIONARY_KEY" first"""
 import os
 from typing import Optional
 
