@@ -10,15 +10,11 @@ class RequestResponse:
         self.api_key: str = api_key
         self.md_response: str = ""
 
-    def parse_resonse(self, word: str) -> None:
+    def parse_resonse(self, word: str) -> str:
         """Parse response to md-formated text"""
-        url: str = f"https://www.dictionaryapi.com\
-                /api/v3/references/collegiate/json/{word}?key={self.api_key}"
+        url: str = f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word}?key={self.api_key}"
         response: requests.Response = requests.get(url, timeout=5)
+        print(response.text)
 
         self.md_response = response.text
-
-    def write_to_file(self, name: str) -> None:
-        """Write md-formated text to file"""
-        with open(name, "w", encoding="UTF-8") as file:
-            file.write(self.md_response)
+        return self.md_response

@@ -1,17 +1,1 @@
-## adverb
-
-[Synonyms of _piecemeal_](https://www.merriam-webster.com/thesaurus/piecemeal)
-
-1
-
-<mark style="background: #FFB8EBA6;">**:** one [piece](https://www.merriam-webster.com/dictionary/piece) at a time **:** [GRADUALLY](https://www.merriam-webster.com/dictionary/gradually)</mark>
-
-2
-
-<mark style="background: #FFB8EBA6;">**:** in [pieces](https://www.merriam-webster.com/dictionary/pieces) or fragments **:** [APART](https://www.merriam-webster.com/dictionary/apart)</mark>
-
-## adjective
-
-<mark style="background: #FFB8EBA6;">**:** done, made, or accomplished [piece](https://www.merriam-webster.com/dictionary/piece) by piece or in a fragmentary way</mark>
-
-piecemeal reforms in the system
+[{"meta":{"id":"piecemeal:1","uuid":"3e8befcb-f054-4a0d-afa1-534309ba3208","sort":"160292000","src":"collegiate","section":"alpha","stems":["piecemeal"],"offensive":false},"hom":1,"hwi":{"hw":"piece*meal","prs":[{"mw":"\u02c8p\u0113s-\u02ccm\u0113l","sound":{"audio":"piecem01","ref":"c","stat":"1"}},{"mw":"-\u02c8m\u0113l"}]},"fl":"adverb","def":[{"sseq":[[["sense",{"sn":"1","dt":[["text","{bc}one {a_link|piece} at a time {bc}{sx|gradually||}"]]}]],[["sense",{"sn":"2","dt":[["text","{bc}in {a_link|pieces} or fragments {bc}{sx|apart||}"]]}]]]}],"date":"14th century{ds||1||}","shortdef":["one piece at a time : gradually","in pieces or fragments : apart"]},{"meta":{"id":"piecemeal:2","uuid":"74c395c1-421b-4cc3-8d62-b692dfcff7a2","sort":"160292100","src":"collegiate","section":"alpha","stems":["piecemeal"],"offensive":false},"hom":2,"hwi":{"hw":"piecemeal"},"fl":"adjective","def":[{"sseq":[[["sense",{"dt":[["text","{bc}done, made, or accomplished {a_link|piece} by piece or in a fragmentary way "],["vis",[{"t":"{wi}piecemeal{\/wi} reforms in the system"}]]]}]]]}],"date":"1593","shortdef":["done, made, or accomplished piece by piece or in a fragmentary way"]}]
