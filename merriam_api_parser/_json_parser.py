@@ -3,7 +3,7 @@ import json
 from collections import defaultdict
 from typing import Any
 
-from merriam_api_parser._md_formatter import TextTokenFormatter
+from merriam_api_parser._text_formatter import TextTokenFormatter
 
 # TODO: may be create a NewType for json data
 

@@ -12,9 +12,7 @@ class RequestResponse:
 
     def parse_resonse(self, word: str) -> str:
         """Parse response to md-formated text"""
-        url: str = f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word}?key={self.api_key}"
+        url: str = f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word}?key={self.api_key}"  # pylint: disable=line-too-long  # noqa: E501
         response: requests.Response = requests.get(url, timeout=5)
-        print(response.text)
-
         self.md_response = response.text
         return self.md_response

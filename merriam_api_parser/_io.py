@@ -2,8 +2,8 @@
 import os
 
 
-class MdReader:
-    """Read a directory or single file, load all md files's name."""
+class Reader:
+    """Read a directory or single file"""
 
     def __init__(self, path: str) -> None:
         self._file_mane: list[str] = (

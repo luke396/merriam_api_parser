@@ -1,8 +1,8 @@
-"""Main"""
+"""Main,please environment variable set MERRIAM_WEBSTER_DICTIONARY_KEY first"""
 import os
 from typing import Optional
 
-from merriam_api_parser._io import MdReader, Writer
+from merriam_api_parser._io import Reader, Writer
 from merriam_api_parser._requset_resopnse import RequestResponse
 
 DICT_KEY: Optional[str] = os.getenv("MERRIAM_WEBSTER_DICTIONARY_KEY")
@@ -13,7 +13,7 @@ def main() -> None:
     """Main"""
     path: str = "data/md"  # usr input
 
-    words: list[str] = MdReader(path).get_md_names(raw=False)
+    words: list[str] = Reader(path).get_md_names(raw=False)
     word_resonsse: dict[str, str] = {}
     for word in words:
         response: str = DICT_REQUESTER.parse_resonse(word)
