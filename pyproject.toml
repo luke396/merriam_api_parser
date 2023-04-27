@@ -29,6 +29,7 @@ select = [
   # type-checking imports
   "TCH",
 ]
+
 [tool.black]
 target-version = ['py311']
 required-version = '23.3.0'
@@ -49,4 +50,10 @@ check_untyped_defs = true
 
 [tool.pylint.messages_control]
 max-line-length = 88
-disable = ["unsubscriptable-object"]
+disable = [
+  "unsubscriptable-object",
+  "too-few-public-methods",
+  "line-too-long",
+  # raise todo
+  "fixme",
+]

@@ -3,15 +3,18 @@ repos:
     rev: v0.0.262
     hooks:
       - id: ruff
+        args: [--exit-non-zero-on-fix]
   - repo: https://github.com/codespell-project/codespell
     rev: v2.2.2
     hooks:
       - id: codespell
         types_or: [python, markdown]
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.12.0
+
+  - repo: https://github.com/sourcery-ai/sourcery
+    rev: v1.2.0
     hooks:
-      - id: isort
+      - id: sourcery
+        args: [--diff=git diff HEAD, --fix]
 
   - repo: local
     hooks:
@@ -21,25 +24,22 @@ repos:
         language: system
         pass_filenames: false
         types: [python]
+
       - id: black
         name: black
         entry: black
         language: python
         types_or: [python, pyi]
         additional_dependencies: [black==23.3.0]
+
       - id: pylint
         name: pylint
         entry: pylint
         language: system
         types: [python]
         files: ^merriam_api_parser/
-        args: [-rn, --errors-only]
-
-  - repo: https://github.com/sourcery-ai/sourcery
-    rev: v1.2.0
-    hooks:
-      - id: sourcery
-        # The best way to use Sourcery in a pre-commit hook:
-        # * review only changed lines:
-        # * omit the summary
-        args: [--diff=git diff HEAD, --fix]
+        args: [
+            "-rn", # Only display messages
+            "-sn", # Don't display the score
+            "--load-plugins=pylint.extensions.docparams", # Load an extension
+          ]
