@@ -22,6 +22,8 @@ def main() -> None:
     writer = Writer(path)
     writer.write(word_responses)
 
+    os.system(f"markdownlint {path}*.md -f")
+
 
 if __name__ == "__main__":
     main()

@@ -2,6 +2,7 @@
 import os
 
 
+# TODO: need to support single file or directory
 class Reader:
     """Read a directory or single file"""
 
@@ -38,7 +39,12 @@ class Writer:
         self.path: str = path
 
     def write(self, word_response: dict[str, str]) -> None:
-        """Write md-formated text to file"""
+        """Write md-formated text to file
+
+        Args:
+            word_response (dict[str, str]): All md text to write\
+                                            (contains header, content, etc)
+        """
         for word, response in word_response.items():
             with open(f"{self.path}/{word}.md", "w", encoding="UTF-8") as file:
                 file.write(response)
