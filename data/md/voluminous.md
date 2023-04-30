@@ -1,3 +1,4 @@
+
 # voluminous
 
 ## 1 a
@@ -5,6 +6,10 @@
 <mark style="background: #FFB8EBA6;">: having or marked by great [volume](https://www.merriam-webster.com/dictionary/volume) or bulk : [large](https://www.merriam-webster.com/dictionary/large) </mark>
 
 long _voluminous_ tresses
+
+### also
+
+<mark style="background: #FFB8EBA6;">: [full](https://www.merriam-webster.com/dictionary/full) </mark>
 
 ## b
 
