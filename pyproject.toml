@@ -1,3 +1,10 @@
+[project]
+name = "merriam-api-parser"
+version = "0.1.0"
+description = "A parser for the Merriam-Webster API"
+authors = [{ name = "Zhengbo Wang", email = "lw7205675@gmail.com" }]
+dependencies = ["ruff", "black", "mypy", "pylint"]
+
 [tool.ruff]
 line-length = 88
 target-version = "py311"
