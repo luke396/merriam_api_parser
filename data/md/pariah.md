@@ -10,4 +10,4 @@ A nation, it seemed, had become a global _pariah_ overnight.
 
 ## 2
 
-<mark style="background: #FFB8EBA6;">: a member of a low {d_link|caste|caste} of southern India</mark>
+<mark style="background: #FFB8EBA6;">: a member of a low [caste](https://www.merriam-webster.com/dictionary/caste) of southern India</mark>

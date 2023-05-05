@@ -8,7 +8,10 @@ long _voluminous_ tresses
 
 ### also
 
-<mark style="background: #FFB8EBA6;">: [full](https://www.merriam-webster.com/dictionary/full) </mark>## b
+<mark style="background: #FFB8EBA6;">: [full](https://www.merriam-webster.com/dictionary/full) </mark>
+
+## b
+
 <mark style="background: #FFB8EBA6;">: writing or speaking much or at great length </mark>
 
 a _voluminous_ correspondent

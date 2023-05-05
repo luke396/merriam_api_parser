@@ -119,17 +119,34 @@ class JsonParser:
 
     def _sense_to_md(self) -> None:
         """Convert the sense to md text."""
-        for key, value in self._sense.items():
-            self._add_md_head(key, 2)
-            self._md_text += _md_text_color(f"{value['text']}")
-            self._add_md_new_line()
-            self._md_text += "\n\n".join(value["vis"])
-            self._add_md_new_line()
-            self._add_md_head(value["sdense_sd"], level=3)
-            self._md_text += _md_text_color(f"{value['sdense_text']}")
-            self._md_text += "\n\n".join(value["sdense_vis"])
+        for head, sense in self._sense.items():
+            self._add_head(head, 2)
+            self._add_sense(sense, "text", "vis")
+            self._add_head(sense["sdense_sd"], level=3)
+            self._add_sense(sense, "sdense_text", "sdense_vis")
 
-    def _add_md_head(self, key: str, level: int) -> None:
+    def _add_sense(
+        self,
+        sense: dict[str, str],
+        sense_text: str,
+        illustration: str,
+    ) -> None:
+        """Add sense to md text.
+
+        Args:
+            sense (dict[str, str]): Sense dict.
+            sense_text (str): Sense text, will be colored.
+            illustration (str): Illustration text.
+        """
+        self._add_md_new_line()
+
+        self._md_text += _md_text_color(f"{sense[sense_text]}")
+        self._add_md_new_line()
+
+        self._md_text += "\n\n".join(sense[illustration])
+        self._add_md_new_line()
+
+    def _add_head(self, key: str, level: int) -> None:
         if key:
             pre: str = "#" * level
             self._md_text += f"{pre} {key}\n"
@@ -139,7 +156,7 @@ class JsonParser:
 
     def get_md_text(self) -> str:
         """Return the md text."""
-        self._add_md_head(self._meta["id"], 1)  # header
+        self._add_head(self._meta["id"], 1)  # header
         self._sense_to_md()
         # TODO: to format and return all md text (eg: head, new lines, etc.)
         return self._md_text

@@ -28,7 +28,8 @@ def get_words(path: Path) -> list[str]:
 
 def main() -> None:
     """Get path and run."""
-    path: Path = Path(input("Please input path, default is data/md/:\n") or "data/md/")
+    path_input: str = input("Please input path or -d, default is data/md/:\n")
+    path: Path = Path(path_input) if path_input != "-d" else Path("data/md/")
 
     words: list[str] = get_words(path)
     word_responses: dict[str, str] = {}
