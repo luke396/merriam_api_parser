@@ -4,38 +4,69 @@ version = "0.1.0"
 description = "A parser for the Merriam-Webster API"
 authors = [{ name = "Zhengbo Wang", email = "lw7205675@gmail.com" }]
 dependencies = ["ruff", "black", "mypy", "pylint"]
+requires-python = ">=3.11"
 
 [tool.ruff]
+select = ["ALL"]
+ignore = [
+  # Will raise for untyped "self", this is not needed for the time being
+  # https://github.com/charliermarsh/ruff/issues/1231#issuecomment-1350066198
+  "ANN101",
+]
 line-length = 88
 target-version = "py311"
 fix = true
-select = [
-  # pyflakes
-  "F",
-  # pycodestyle
-  "E",
-  "W",
-  # flake8-2020
-  "YTT",
-  # flake8-bugbear
+fixable = [
+  "A",
   "B",
-  # flake8-quotes
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "I",
+  "N",
   "Q",
-  # pylint
-  "PLE",
-  "PLR",
-  "PLW",
-  # misc lints
-  "PIE",
-  # flake8-pyi
-  "PYI",
-  # tidy imports
-  "TID",
-  # implicit string concatenation
+  "S",
+  "T",
+  "W",
+  "ANN",
+  "ARG",
+  "BLE",
+  "COM",
+  "DJ",
+  "DTZ",
+  "EM",
+  "ERA",
+  "EXE",
+  "FBT",
+  "ICN",
+  "INP",
   "ISC",
-  # type-checking imports
+  "NPY",
+  "PD",
+  "PGH",
+  "PIE",
+  "PL",
+  "PT",
+  "PTH",
+  "PYI",
+  "RET",
+  "RSE",
+  "RUF",
+  "SIM",
+  "SLF",
   "TCH",
+  "TID",
+  "TRY",
+  "UP",
+  "YTT",
 ]
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.pydocstyle]
+convention = "numpy"
 
 [tool.black]
 target-version = ['py311']
@@ -61,6 +92,6 @@ disable = [
   "unsubscriptable-object",
   "too-few-public-methods",
   "line-too-long",
-  # raise todo
+  # Raise if has todo
   "fixme",
 ]

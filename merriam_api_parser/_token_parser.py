@@ -1,5 +1,4 @@
-"""Format a string and return md-formatted text.
-"""
+"""Format a string and return md-formatted text."""
 import re
 
 
@@ -16,7 +15,6 @@ class TextTokenFormatter:
         self._parse_bold_colon()
         self._parser_url()
         self._parse_wi()
-        # print(self.text)
         return self.text
 
     def _parse_bold_colon(self) -> None:
@@ -28,12 +26,12 @@ class TextTokenFormatter:
         self._text_replace_2(r"{wi}(\w+){/wi}", r"_\1_")
 
     def _parser_url(self) -> None:
-        """Convert '{a_link|word}' or '{sx|word||}' to md-format '\\[word](url)'."""
+        r"""Convert '{a_link|word}' or '{sx|word||}' to md-format '[word](url)'."""
         self._convert_url(r"{(a_link)\|(\w+)}")
         self._convert_url(r"{(sx)\|(\w+)\|\|}")
 
     def _convert_url(self, pattern: str) -> None:
-        """Convert url to md-format '\\[word](url)'."""
+        r"""Convert url to md-format '[word](url)'."""
         matches: list[str] = re.findall(pattern, self.text)
         for match in matches:
             tag: str = match[0]
@@ -49,7 +47,5 @@ class TextTokenFormatter:
         elif tag == "bc":
             self.text = self.text.replace(f"{{{tag}}}{word}", md_format)
 
-    def _text_replace_2(self, arg0, arg1) -> None:
-        pattern: str = arg0
-        replacement: str = arg1
+    def _text_replace_2(self, pattern: str, replacement: str) -> None:
         self.text = re.sub(pattern, replacement, self.text)
