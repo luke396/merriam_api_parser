@@ -34,6 +34,9 @@ MANIFEST
 
 # Installer logs
 pip-log.txt
+
+# tmp file
+tmp*
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
@@ -167,3 +170,9 @@ cython_debug/
 
 # pyenv
 .python-version
+
+# data file
+data/
+
+# tmp file
+tmp*
