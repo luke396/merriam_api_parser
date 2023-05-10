@@ -14,7 +14,7 @@ class RequestResponse:
     def __init__(self, api_key: str) -> None:
         self.api_key: str = api_key
 
-    def parse_resonse(self, word: str) -> str:
+    def parse_response(self, word: str) -> str:
         """Parse response to md-formated text."""
         url: str = f"https://www.dictionaryapi.com/api/v3/references/collegiate/json/{word}?key={self.api_key}"  # noqa: E501
         response: requests.Response = requests.get(url, timeout=5)
@@ -27,3 +27,5 @@ class RequestResponse:
         if not isinstance(json_data[0], dict):
             msg: str = "Input words maybe not found"
             raise TypeError(msg)
+        # TODO: check more error
+        # TODO: correct wrong input

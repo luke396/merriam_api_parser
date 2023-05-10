@@ -4,7 +4,7 @@ from typing import Any
 
 from merriam_api_parser._token_parser import TextTokenFormatter
 
-# TODO: may be create a NewType for json data
+# TODO: create a NewType for json data
 
 
 class JsonParser:
@@ -158,7 +158,7 @@ class JsonParser:
         """Return the md text."""
         self._add_head(self._meta["id"], 1)  # header
         self._sense_to_md()
-        # TODO: to format and return all md text (eg: head, new lines, etc.)
+        # format and return all md text here (eg: head, new lines, etc.)
         return self._md_text
 
 

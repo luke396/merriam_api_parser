@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 
-# TODO: need to support single file or directory
+# TODO: support single file or directory
 class Reader:
     """Read a directory or single file."""
 
