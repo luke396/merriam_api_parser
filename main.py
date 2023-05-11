@@ -18,6 +18,14 @@ def init_request_response() -> RequestResponse:
     return RequestResponse(dict_key)
 
 
+# TODO: more suitable for argparse
+def usr_input_path() -> Path:
+    """Get path from user input."""
+    path_input: str = input("Please input path or -d, default is data/md/: ")
+    path: Path = Path(path_input) if path_input != "-d" else Path("data/md/")
+    return path
+
+
 def get_words(path: Path) -> list[str]:
     """Get words from file."""
     reader = Reader(path)
@@ -38,10 +46,23 @@ def process_word(request_response: RequestResponse, word: str) -> str:
     return response
 
 
-def main() -> None:
-    """Get path and run."""
-    path_input: str = input("Please input path or -d, default is data/md/: ")
-    path: Path = Path(path_input) if path_input != "-d" else Path("data/md/")
+# Performance improvement
+# TODO: Change write and read for single word, not treat as a dict
+# TODO: Change to async
+def write_to_md(path: Path, word_responses: dict[str, str]) -> None:
+    """Write to md file."""
+    writer = Writer(path)
+    writer.write(word_responses)
+
+
+def format_md(path: Path) -> None:
+    """Format md file."""
+    md_format: str = f"markdownlint {path}/*.md -f"
+    os.system(md_format)  # noqa: S605
+
+
+def main() -> None:  # sourcery skip: docstrings-for-functions  # noqa: D103
+    path: Path = usr_input_path()
 
     words: list[str] = get_words(path)
     word_responses: dict[str, str] = {}
@@ -51,18 +72,13 @@ def main() -> None:
         response: str = process_word(request_response, word)
         word_responses[word] = response
 
-    # Performance improvement
-    # TODO: Change write and read for single word, not treat as a dict
-    # TODO: Change to async
-    writer = Writer(path)
-    writer.write(word_responses)
+    write_to_md(path, word_responses)
 
-    md_format: str = f"markdownlint {path}/*.md -f"
-    os.system(md_format)  # noqa: S605
+    format_md(path)
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
+    logging.basicConfig(  # TODO: move to congfig file if more complex
         level=logging.DEBUG,
         format="%(asctime)s %(levelname)s %(message)s",
         handlers=[

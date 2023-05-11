@@ -49,4 +49,5 @@ disable = [
   "line-too-long",
   # Raise if has todo
   "fixme",
+  "missing-function-docstring",
 ]
