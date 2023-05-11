@@ -9,7 +9,7 @@ repos:
     rev: v2.2.4
     hooks:
       - id: codespell
-        types_or: [python, markdown]
+        types_or: [python, markdown, json, yaml]
 
   - repo: https://github.com/sourcery-ai/sourcery
     rev: v1.2.0
