@@ -48,9 +48,9 @@ class JsonParser:
                 self._sense[sense_number] = definition_text
             elif single_sense[0] == "pseq":  # has nested sense
                 # TODO: head level should lower than sense
-                for single_example_ in single_sense[1]:
+                for single_sense_ in single_sense[1]:
                     sense_number, definition_text = self._parse_single_sense(
-                        single_example_,
+                        single_sense_,
                     )
                     self._sense[sense_number] = definition_text
 
