@@ -40,41 +40,57 @@ class JsonParser:
     def _parse_single_sseq(self, single_sseq: list[Any]) -> None:
         """Parse single sense which contains sense and example, is what we need."""
         single_sense: list[Any]
+        sense_number: str
+        definition_text: defaultdict[str, Any]
         for single_sense in single_sseq:
-            single_sense_ele: defaultdict[str, Any] = _convert_dict_to_defaultdict(
-                single_sense[1],
+            if single_sense[0] == "sense":
+                sense_number, definition_text = self._parse_single_sense(single_sense)
+                self._sense[sense_number] = definition_text
+            elif single_sense[0] == "pseq":  # has nested sense
+                # TODO: head level should lower than sense
+                for single_example_ in single_sense[1]:
+                    sense_number, definition_text = self._parse_single_sense(
+                        single_example_,
+                    )
+                    self._sense[sense_number] = definition_text
+
+    def _parse_single_sense(
+        self,
+        single_sense: list[Any],
+    ) -> tuple[str, defaultdict[str, Any]]:
+        single_sense_ele: defaultdict[str, Any] = _convert_dict_to_defaultdict(
+            single_sense[1],
+        )
+
+        sense_number: str = single_sense_ele["sn"]
+
+        definition_text: defaultdict[str, Any] = self._parse_dt(
+            single_sense_ele["dt"],
+        )
+        definition_text["text"] = self.token_parser.parse_token(
+            definition_text["text"],
+        )
+        definition_text["vis"] = [
+            self.token_parser.parse_token(i["t"]) for i in definition_text["vis"]
+        ]  # ignore `author` tag within example, for now
+
+        if single_sense_ele.get("sdsense") is not None:
+            divided_sense: dict[str, Any] = _convert_dict_to_defaultdict(
+                single_sense_ele["sdsense"],
             )
-
-            sense_number: str = single_sense_ele["sn"]
-
-            definition_text: defaultdict[str, Any] = self._parse_dt(
-                single_sense_ele["dt"],
+            divided_sense_dt: defaultdict[str, Any] = self._parse_dt(
+                divided_sense["dt"],
             )
-            definition_text["text"] = self.token_parser.parse_token(
-                definition_text["text"],
+            definition_text["sdense_sd"] = divided_sense["sd"]
+            definition_text["sdense_text"] = self.token_parser.parse_token(
+                divided_sense_dt["text"],
             )
-            definition_text["vis"] = [
-                self.token_parser.parse_token(i["t"]) for i in definition_text["vis"]
-            ]  # ignore `author` tag within example, for now
+            definition_text["sdense_vis"] = [
+                self.token_parser.parse_token(i["t"]) for i in divided_sense["vis"]
+            ]
 
-            if single_sense_ele.get("sdsense", None) is not None:
-                divided_sense: dict[str, Any] = _convert_dict_to_defaultdict(
-                    single_sense_ele["sdsense"],
-                )
-                divided_sense_dt: defaultdict[str, Any] = self._parse_dt(
-                    divided_sense["dt"],
-                )
-                definition_text["sdense_sd"] = divided_sense["sd"]
-                definition_text["sdense_text"] = self.token_parser.parse_token(
-                    divided_sense_dt["text"],
-                )
-                definition_text["sdense_vis"] = [
-                    self.token_parser.parse_token(i["t"]) for i in divided_sense["vis"]
-                ]
-
-            self._sense[sense_number] = definition_text
-
-            # TODO: continue here parse more inside single sense
+        # TODO: continue here parse more inside single sense
+        return sense_number, definition_text
 
     def _parse_dt(self, origin_dt: list[list[str | Any]]) -> defaultdict[str, Any]:
         """Return 'text' and 'vis' inside dt section."""

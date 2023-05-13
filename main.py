@@ -88,5 +88,3 @@ if __name__ == "__main__":
     )
 
     main()
-
-# TODO: handle error for `harass`, maybe need parse more sense.
