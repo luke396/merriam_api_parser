@@ -19,11 +19,25 @@ def init_request_response() -> MerriamWebsterAPI:
     return MerriamWebsterAPI(dict_key)
 
 
-def usr_input_path() -> Path:
+def get_user_input() -> str:
+    """Get user input as a string."""
+    return input("Please input a word or a path: ")
+
+
+def process_user_input(user_input: str) -> str | Path:
+    """Determine if user input is a word or a path."""
+    if user_input == "-d" or "/" in user_input:
+        try:
+            return get_path(user_input)
+        except Exception as error:  # noqa: BLE001
+            msg = f"Invalid path: {error}"
+            raise ValueError(msg) from error
+    return user_input  # single word
+
+
+def get_path(user_input: str) -> Path:
     """Get path from user input."""
-    path_input: str = input("Please input path or -d, default is data/md/: ")
-    path: Path = Path(path_input) if path_input != "-d" else Path("data/md/")
-    return path
+    return Path("data/md/") if user_input == "-d" else Path(user_input)
 
 
 def get_words(path: Path) -> Generator[str, None, None]:
@@ -63,13 +77,19 @@ def format_md(path: Path) -> None:
 
 def main() -> None:
     """Run."""
-    path: Path = usr_input_path()
-
     request_response: MerriamWebsterAPI = init_request_response()
+    user_input = process_user_input(get_user_input())
 
-    for word, response in (
-        process_word(request_response, word) for word in get_words(path)
-    ):
+    if isinstance(user_input, Path):
+        path: Path = user_input
+        for word, response in (
+            process_word(request_response, word) for word in get_words(path)
+        ):
+            write_to_md(path, word, response)
+
+    elif isinstance(user_input, str):
+        path = Path("data/md/")
+        word, response = process_word(request_response, user_input)
         write_to_md(path, word, response)
 
     format_md(path)
