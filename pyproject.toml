@@ -47,7 +47,7 @@ disable = [
   "unsubscriptable-object",
   "too-few-public-methods",
   "line-too-long",
-  # Raise if has todo
-  "fixme",
+  "fixme",                      # Raise if has todo
   "missing-function-docstring",
+  "broad-except",               # caught by ruff
 ]

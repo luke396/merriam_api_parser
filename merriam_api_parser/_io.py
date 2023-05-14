@@ -26,18 +26,10 @@ class Reader:
 class Writer:
     """Write md-formated text to file."""
 
-    def __init__(self, path: Path) -> None:
-        self.path: Path = path
+    def __init__(self, out_path: Path) -> None:
+        self.out_path: Path = out_path
 
-    def write(self, word_response: dict[str, str]) -> None:
-        """Write md-formated text to file.
-
-        Args:
-        ----
-            word_response (dict[str, str]): All md text to write\
-                                            (contains header, content, etc)
-        """
-        for word, response in word_response.items():
-            out_path: Path = self.path / f"{word}.md"  # path lib operator
-            with Path.open(out_path, "w", encoding="UTF-8") as file:
-                file.write(response)
+    def write(self, response: str) -> None:
+        """Write md-formated text to file."""
+        with Path.open(self.out_path, "w", encoding="UTF-8") as file:
+            file.write(response)
