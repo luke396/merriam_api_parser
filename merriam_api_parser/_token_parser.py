@@ -9,7 +9,7 @@ class TextTokenFormatter:
     BASE_URL: str = "https://www.merriam-webster.com/dictionary/"
     BOLD_COLON_PATTERN: str = r"{bc}"
     WI_PATTERN: str = r"{wi}(\w+){/wi}"
-    WORD_PATTERN: str = r"(\w*\-*\w*)"  # match word like cruel or cold-blooded
+    WORD_PATTERN: str = r"(\w*\-*\w*)"
     URL_PATTERNS: list[str] = [
         r"{(a_link)\|" + WORD_PATTERN + r"}",
         r"{(sx)\|" + WORD_PATTERN + r"\|" + WORD_PATTERN + r"\|}",
