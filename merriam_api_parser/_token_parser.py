@@ -9,10 +9,11 @@ class TextTokenFormatter:
     BASE_URL: str = "https://www.merriam-webster.com/dictionary/"
     BOLD_COLON_PATTERN: str = r"{bc}"
     WI_PATTERN: str = r"{wi}(\w+){/wi}"
+    WORD_PATTERN: str = r"(\w*\-*\w*)"  # match word like cruel or cold-blooded
     URL_PATTERNS: list[str] = [
-        r"{(a_link)\|(\w+)}",
-        r"{(sx)\|(\w*)\|(w*)\|}",
-        r"{(d_link)\|(\w*)\|(\w*)}",
+        r"{(a_link)\|" + WORD_PATTERN + r"}",
+        r"{(sx)\|" + WORD_PATTERN + r"\|" + WORD_PATTERN + r"\|}",
+        r"{(d_link)\|" + WORD_PATTERN + r"\|" + WORD_PATTERN + r"}",
     ]
 
     def __init__(self) -> None:
