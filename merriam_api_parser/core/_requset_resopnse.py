@@ -5,7 +5,7 @@ from typing import Any
 
 import requests
 
-from merriam_api_parser._json_parser import JsonParser
+from merriam_api_parser.core._json_parser import JsonParser
 
 
 class MerriamWebsterAPI:

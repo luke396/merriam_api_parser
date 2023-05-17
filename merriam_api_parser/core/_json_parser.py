@@ -2,7 +2,7 @@
 from collections import defaultdict
 from typing import Any
 
-from merriam_api_parser._token_parser import TextTokenFormatter
+from merriam_api_parser.core._token_parser import TextTokenFormatter
 
 # TODO: may be create a NewType for json data
 
