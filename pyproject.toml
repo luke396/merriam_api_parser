@@ -23,6 +23,14 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 [tool.ruff.pydocstyle]
 convention = "numpy"
 
+[tool.ruff.per-file-ignores]
+
+"merriam_api_parser/tests/*" = [
+  "S101", # use assert
+  "D100", # public module missing docstring
+  "D103", # public function missing docstring
+]
+
 [tool.black]
 target-version = ['py311']
 required-version = '23.3.0'
@@ -44,10 +52,16 @@ check_untyped_defs = true
 [tool.pylint.messages_control]
 max-line-length = 88
 disable = [
+  "too-few-public-methods", # Uncessary for now
+  "fixme",                  # Raise if has todo
+
+  # False positive
   "unsubscriptable-object",
-  "too-few-public-methods",
+  "import-error",
+
+  # Caught by ruff
   "line-too-long",
-  "fixme",                      # Raise if has todo
   "missing-function-docstring",
-  "broad-except",               # caught by ruff
+  "broad-except",
+  "missing-module-docstring",
 ]

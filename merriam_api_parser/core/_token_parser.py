@@ -9,7 +9,7 @@ class TextTokenFormatter:
     BASE_URL: str = "https://www.merriam-webster.com/dictionary/"
     BOLD_COLON_PATTERN: str = r"{bc}"
     WI_PATTERN: str = r"{wi}(\w+){/wi}"
-    WORD_PATTERN: str = r"(\w*\-*\w*)"
+    WORD_PATTERN: str = r"(\w*\-*\ *\w*)"
     URL_PATTERNS: list[str] = [
         r"{(a_link)\|" + WORD_PATTERN + r"}",
         r"{(sx)\|" + WORD_PATTERN + r"\|" + WORD_PATTERN + r"\|}",
@@ -37,8 +37,8 @@ class TextTokenFormatter:
             try:
                 matches = re.findall(pattern, self.text)
                 for match in matches:
-                    _tag, word = match[0], match[1]
-                    md_format = f"[{word}]({self.BASE_URL}{word})"
+                    _tag, word = match[0], match[1] or match[2]
+                    md_format = f"[{word}]({self.BASE_URL}{word.replace(' ', '-')})"
                     self._text_replace(pattern, md_format)
             except re.error:
                 logging.exception("Regex error Found")
