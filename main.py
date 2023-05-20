@@ -4,8 +4,8 @@ import os
 from collections.abc import Generator
 from pathlib import Path
 
-from merriam_api_parser._io import Reader, Writer
-from merriam_api_parser._requset_resopnse import MerriamWebsterAPI
+from merriam_api_parser.core._io import Reader, Writer
+from merriam_api_parser.core._requset_resopnse import MerriamWebsterAPI
 
 
 def init_request_response() -> MerriamWebsterAPI:
