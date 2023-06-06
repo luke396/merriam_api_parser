@@ -12,7 +12,7 @@ repos:
         types_or: [python, markdown, json, yaml]
 
   - repo: https://github.com/sourcery-ai/sourcery
-    rev: v1.2.0
+    rev: v1.3.0
     hooks:
       - id: sourcery
         args: [--diff=git diff main, --fix, --no-summary]
@@ -44,3 +44,9 @@ repos:
             "-sn", # Don't display the score
             "--load-plugins=pylint.extensions.docparams", # Load an extension
           ]
+
+      - id: pytest
+        name: pytest
+        entry: pytest
+        language: system
+        types: [python]

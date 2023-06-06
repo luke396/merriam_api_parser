@@ -21,9 +21,16 @@ class MerriamWebsterAPI:
         url: str = f"{self.API_URL}/{word}?key={self.api_key}"
         try:
             response: requests.Response = requests.get(url, timeout=5)
+            response.raise_for_status()
             json_res: list[dict[str, Any]] = json.loads(response.text)
             return JsonParser(
                 json_res[0],
             ).get_md_text()  # TODO: json_res[0] maybe more specific
-        except Exception:  # noqa: BLE001
+        except requests.Timeout:
+            return ""
+        except (json.JSONDecodeError, IndexError):
+            return ""
+        except requests.HTTPError:
+            return ""
+        except requests.ConnectionError:
             return ""

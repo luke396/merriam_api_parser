@@ -1,49 +1,52 @@
-"""Parse the json file and return needed data."""
 from collections import defaultdict
 from typing import Any
 
 from merriam_api_parser.core._token_parser import TextTokenFormatter
 
-# TODO: may be create a NewType for json data
-
 
 class JsonParser:
-    """Parse a json file and return needed data."""
+    """Parse json data from Merriam-Webster Collegiate Dictionary API."""
 
     def __init__(self, json_data: dict[str, Any]) -> None:
-        """Init the class."""
         self.token_parser = TextTokenFormatter()
-        self._data = json_data
-        self._meta = self._data["meta"]
-        self._fl = self._data["fl"]
-        self._sense: defaultdict[str, defaultdict[str, Any]] = defaultdict()
+        self._data: dict[str, Any] = json_data
+        self._meta: dict[str, Any] = self._data["meta"]
+        self._fl: str = self._data["fl"]
+        self._sense: dict[str, dict[str, Any]] = defaultdict()
 
-        self._md_text = ""
+        self._md_text: str = ""
 
         self._parse_sseq()
 
     def _parse_sseq(self) -> None:
-        sseq: list[Any] = self._data["def"][0].get("sseq", None)  # sense sequence
+        try:
+            sseq: list[list[Any]] = self._data["def"][0].get("sseq", [])
+        except (KeyError, IndexError):
+            return
         for single_sseq in sseq:
             self._parse_single_sseq(single_sseq)
 
     def _parse_single_sseq(self, single_sseq: list[Any]) -> None:
         for single_sense in single_sseq:
-            if single_sense[0] == "sense":
-                sense_number, definition_text = self._parse_single_sense(single_sense)
-                self._sense[sense_number] = definition_text
-            elif single_sense[0] == "pseq":  # has nested sense
-                # TODO: head level should lower than sense
-                for single_sense_ in single_sense[1]:
+            try:
+                if single_sense[0] == "sense":
                     sense_number, definition_text = self._parse_single_sense(
-                        single_sense_,
+                        single_sense,
                     )
                     self._sense[sense_number] = definition_text
+                elif single_sense[0] == "pseq":
+                    for single_sense_ in single_sense[1]:
+                        sense_number, definition_text = self._parse_single_sense(
+                            single_sense_,
+                        )
+                        self._sense[sense_number] = definition_text
+            except (TypeError, KeyError, IndexError):
+                continue
 
     def _parse_single_sense(
         self,
         single_sense: list[Any],
-    ) -> tuple[str, defaultdict[str, Any]]:
+    ) -> tuple[str, dict[str, Any]]:
         single_sense_ele = _convert_dict_to_defaultdict(single_sense[1])
         sense_number = single_sense_ele["sn"]
         definition_text = self._parse_dt(single_sense_ele["dt"])
@@ -65,7 +68,7 @@ class JsonParser:
 
         return sense_number, definition_text
 
-    def _parse_dt(self, origin_dt: list[list[str | Any]]) -> defaultdict[str, Any]:
+    def _parse_dt(self, origin_dt: list[list[str | Any]]) -> dict[str, Any]:
         dt_ele = self._name_ele_constructor(origin_dt)
         name = ["text", "vis"]
         return defaultdict(str, zip(name, [dt_ele[i] for i in name], strict=True))
@@ -73,7 +76,7 @@ class JsonParser:
     def _name_ele_constructor(
         self,
         lst: list[list[str | Any]],
-    ) -> defaultdict[str, Any]:
+    ) -> dict[str, Any]:
         names = []
         ele = []
         for single in lst:
@@ -90,7 +93,7 @@ class JsonParser:
 
     def _add_sense(
         self,
-        sense: defaultdict[str, str],
+        sense: dict[str, str],
         sense_text: str,
         illustration: str,
     ) -> None:
