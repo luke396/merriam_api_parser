@@ -84,7 +84,7 @@ class JsonParser:
             ele.append(single[1])
         return defaultdict(str, zip(names, ele, strict=True))
 
-    def _sense_to_md(self) -> None:
+    def _add_all_sense(self) -> None:
         for head, sense in self._sense.items():
             self._add_head(head, 2)
             self._add_sense(sense, "text", "vis")
@@ -111,9 +111,22 @@ class JsonParser:
     def _add_md_new_line(self) -> None:
         self._md_text += "\n\n"
 
+    def _add_three_hyphen(self) -> None:
+        """Add three hyphen to note's metadata."""
+        self._md_text += "---\n"
+
+    def _add_synonym(self) -> None:
+        if synonym := self._meta.get("stems", []):
+            self._md_text += f"aliases: {', '.join(synonym)}\n"
+
     def get_md_text(self) -> str:
+        # note's metadata
+        self._add_three_hyphen()
+        self._add_synonym()
+        self._add_three_hyphen()
+
         self._add_head(self._meta["id"], 1)
-        self._sense_to_md()
+        self._add_all_sense()
         return self._md_text
 
 
