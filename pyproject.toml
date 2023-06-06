@@ -65,3 +65,7 @@ disable = [
   "broad-except",
   "missing-module-docstring",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["merriam_api_parser/tests"]
+addopts = "--verbose"
