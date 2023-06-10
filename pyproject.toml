@@ -8,7 +8,7 @@ authors = [{ name = "Zhengbo Wang", email = "lw7205675@gmail.com" }]
 dependencies = [
   "ruff == 0.0.262",
   "black == 23.3.0",
-  "mypy == 1.2.0",
+  "mypy == 1.3.0",
   "pylint == 2.17.4",
   "pytest == 7.3.1",
   "pytest-cov == 4.1.0",
