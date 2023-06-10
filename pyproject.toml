@@ -3,7 +3,7 @@ name = "merriam-api-parser"
 version = "0.1.0"
 description = "A parser for the Merriam-Webster API"
 readme = "README.md"
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 authors = [{ name = "Zhengbo Wang", email = "lw7205675@gmail.com" }]
 dependencies = [
   "ruff == 0.0.262",
