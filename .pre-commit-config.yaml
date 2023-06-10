@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.264
+    rev: v0.0.272
     hooks:
       - id: ruff
         args: [--exit-non-zero-on-fix]
@@ -11,11 +11,29 @@ repos:
       - id: codespell
         types_or: [python, markdown, json, yaml]
 
-  - repo: https://github.com/sourcery-ai/sourcery
-    rev: v1.3.0
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.4.0
     hooks:
-      - id: sourcery
-        args: [--diff=git diff main, --fix, --no-summary]
+      - id: pyupgrade
+        args: [--py311-plus]
+
+  - repo: https://github.com/asottile/add-trailing-comma
+    rev: v2.4.0
+    hooks:
+      - id: add-trailing-comma
+        args: [--py311-plus]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: debug-statements
+      - id: name-tests-test
+        args: [--pytest-test-first]
+      - id: requirements-txt-fixer
 
   - repo: local
     hooks:
@@ -52,3 +70,9 @@ repos:
         types: [python]
         pass_filenames: false
         always_run: true
+
+  - repo: https://github.com/sourcery-ai/sourcery
+    rev: v1.3.1b10
+    hooks:
+      - id: sourcery
+        args: [--diff=git diff HEAD, --fix, --no-summary]
