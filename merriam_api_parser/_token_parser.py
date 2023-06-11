@@ -1,5 +1,4 @@
 """Format a string and return md-formatted text."""
-import logging
 import re
 
 
@@ -27,24 +26,18 @@ class TextTokenFormatter:
         return self.text
 
     def _parse_colon(self) -> None:
-        self._text_replace(self.BOLD_COLON_PATTERN, ": ")
+        self.text = re.sub(self.BOLD_COLON_PATTERN, ": ", self.text)
 
     def _parse_wi(self) -> None:
-        self._text_replace(self.WI_PATTERN, r"_\1_")
+        self.text = re.sub(self.WI_PATTERN, r"_\1_", self.text)
 
     def _parse_url(self) -> None:
         for pattern in self.URL_PATTERNS:
-            try:
-                matches = re.findall(pattern, self.text)
-                for match in matches:
-                    _tag, word = match[0], match[1] or match[2]
-                    md_format = f"[{word}]({self.BASE_URL}{word.replace(' ', '-')})"
-                    self._text_replace(pattern, md_format)
-            except re.error:
-                logging.exception("Regex error Found")
-
-    def _text_replace(self, pattern: str, replacement: str) -> None:
-        self.text = re.sub(pattern, replacement, self.text)
+            matches = re.findall(pattern, self.text)
+            for match in matches:
+                _tag, word = match[0], match[1] or match[2]
+                md_format = f"[{word}]({self.BASE_URL}{word.replace(' ', '-')})"
+                self.text = re.sub(pattern, md_format, self.text)
 
     def __repr__(self) -> str:
         return f"TextTokenFormatter(text='{self.text}')"

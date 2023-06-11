@@ -3,7 +3,14 @@ name = "merriam-api-parser"
 version = "0.1.0"
 description = "A parser for the Merriam-Webster API"
 authors = [{ name = "Zhengbo Wang", email = "lw7205675@gmail.com" }]
-dependencies = ["ruff", "black", "mypy", "pylint"]
+dependencies = [
+  "ruff",
+  "black",
+  "mypy",
+  "pylint",
+  "pytest-asyncio == 0.21.0",
+  "pytest-mock == 3.10.0",
+]
 requires-python = ">=3.11"
 
 [tool.ruff]
@@ -24,10 +31,14 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 convention = "numpy"
 
 [tool.ruff.per-file-ignores]
-"merriam_api_parser/tests/*" = [
-  "S101", # use assert
-  "D100", # public module missing docstring
-  "D103", # public function missing docstring
+"tests/*" = [
+  "S101",   # use assert
+  "SLF001", # private member accessed
+  "D100",   # public module missing docstring
+  "D103",   # public function missing docstring
+  "ANN001", # missing function argument type annotation
+  "ANN201", # missing return type annotation
+  "E501",   # line too long
 ]
 
 [tool.black]
@@ -51,8 +62,12 @@ check_untyped_defs = true
 [tool.pylint.messages_control]
 max-line-length = 88
 disable = [
-  "too-few-public-methods", # Uncessary for now
-  "fixme",                  # Raise if has todo
+  # Too strict
+  "too-few-public-methods",
+  "fixme",
+  "redefined-outer-name",
+  "protected-access",
+  "invalid-name",
 
   # False positive
   "unsubscriptable-object",
@@ -66,5 +81,8 @@ disable = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["merriam_api_parser/tests"]
+testpaths = ["tests"]
 addopts = "--verbose"
+
+[tool.coverage.run]
+omit = ["main.py"]

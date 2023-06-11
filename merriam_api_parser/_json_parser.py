@@ -1,7 +1,7 @@
 from collections import defaultdict
 from typing import Any
 
-from merriam_api_parser.core._token_parser import TextTokenFormatter
+from merriam_api_parser._token_parser import TextTokenFormatter
 
 
 class JsonParser:
@@ -10,23 +10,20 @@ class JsonParser:
     def __init__(self, json_data: dict[str, Any]) -> None:
         self.token_parser = TextTokenFormatter()
         self._data: dict[str, Any] = json_data
-        self._meta: dict[str, Any] = self._data["meta"]
-        self._fl: str = self._data["fl"]
-        self._sense: dict[str, dict[str, Any]] = defaultdict()
-
+        self._meta: dict[str, Any] = self._data.get("meta", {})
+        self._fl: str = self._data.get("fl", "")
+        self._sense: dict[str, dict[str, Any]] = defaultdict(dict)
         self._md_text: str = ""
-
         self._parse_sseq()
 
     def _parse_sseq(self) -> None:
-        try:
-            sseq: list[list[Any]] = self._data["def"][0].get("sseq", [])
-        except (KeyError, IndexError):
-            return
+        """Parse the 'sseq' field of the JSON data."""
+        sseq = self._data.get("def", [{}])[0].get("sseq", [])
         for single_sseq in sseq:
             self._parse_single_sseq(single_sseq)
 
     def _parse_single_sseq(self, single_sseq: list[Any]) -> None:
+        """Parse a single 'sseq' element."""
         for single_sense in single_sseq:
             try:
                 if single_sense[0] == "sense":
@@ -47,49 +44,59 @@ class JsonParser:
         self,
         single_sense: list[Any],
     ) -> tuple[str, dict[str, Any]]:
-        single_sense_ele = _convert_dict_to_defaultdict(single_sense[1])
-        sense_number = single_sense_ele["sn"]
-        definition_text = self._parse_dt(single_sense_ele["dt"])
+        """Parse a single 'sense' element."""
+        single_sense_ele = defaultdict(str, single_sense[1])
+        sense_number = single_sense_ele.get("sn", "")
+        definition_text = self._parse_dt(single_sense_ele.get("dt", []))
         definition_text["text"] = self.token_parser.parse_token(definition_text["text"])
         definition_text["vis"] = [
             self.token_parser.parse_token(i["t"]) for i in definition_text["vis"]
         ]
 
         if single_sense_ele.get("sdsense") is not None:
-            divided_sense = _convert_dict_to_defaultdict(single_sense_ele["sdsense"])
+            divided_sense = defaultdict(str, single_sense_ele["sdsense"])
             divided_sense_dt = self._parse_dt(divided_sense["dt"])
-            definition_text["sdense_sd"] = divided_sense["sd"]
-            definition_text["sdense_text"] = self.token_parser.parse_token(
+            definition_text["sdsense_sd"] = divided_sense["sd"]
+            definition_text["sdsense_text"] = self.token_parser.parse_token(
                 divided_sense_dt["text"],
             )
-            definition_text["sdense_vis"] = [
-                self.token_parser.parse_token(i["t"]) for i in divided_sense["vis"]
-            ]
 
         return sense_number, definition_text
 
     def _parse_dt(self, origin_dt: list[list[str | Any]]) -> dict[str, Any]:
+        """Parse a 'dt' element."""
         dt_ele = self._name_ele_constructor(origin_dt)
-        name = ["text", "vis"]
-        return defaultdict(str, zip(name, [dt_ele[i] for i in name], strict=True))
+        return {"text": dt_ele.get("text", ""), "vis": dt_ele.get("vis", "")}
 
-    def _name_ele_constructor(
-        self,
-        lst: list[list[str | Any]],
-    ) -> dict[str, Any]:
+    # not change to stasticmethod
+    def _name_ele_constructor(self, lst: list[list[str | Any]]) -> dict[str, Any]:
+        """Construct a dictionary from a list of lists."""
         names = []
         ele = []
         for single in lst:
             names.append(single[0])
             ele.append(single[1])
-        return defaultdict(str, zip(names, ele, strict=True))
+        return dict(zip(names, ele, strict=True))
+
+    def get_md_text(self) -> str:
+        """Get the markdown text."""
+        # note's metadata
+        self._add_three_hyphen_up()
+        self._add_synonym()
+        self._add_three_hyphen_down()
+
+        self._add_head(self._meta.get("id", ""), 1)
+        self._add_all_sense()
+        return self._md_text
 
     def _add_all_sense(self) -> None:
+        """Add all senses to the markdown text."""
         for head, sense in self._sense.items():
-            self._add_head(head, 2)
+            self._add_head(head, level=2)
             self._add_sense(sense, "text", "vis")
-            self._add_head(sense["sdense_sd"], level=3)
-            self._add_sense(sense, "sdense_text", "sdense_vis")
+            if sense.get("sdsense_sd") is not None:
+                self._add_head(sense.get("sdsense_sd", ""), level=3)
+                self._add_sense(sense, "sdsense_text", "sdense_vis")
 
     def _add_sense(
         self,
@@ -97,42 +104,38 @@ class JsonParser:
         sense_text: str,
         illustration: str,
     ) -> None:
+        """Add a sense to the markdown text."""
         self._add_md_new_line()
-        self._md_text += _md_text_color(f"{sense[sense_text]}")
+        self._md_text += _md_text_color(f"{sense.get(sense_text, '')}")
         self._add_md_new_line()
-        self._md_text += "\n\n".join(sense[illustration])
-        self._add_md_new_line()
+        self._md_text += "\n\n".join(sense.get(illustration, ""))
 
-    def _add_head(self, key: str, level: int) -> None:
-        if key:
-            pre = "#" * level
-            self._md_text += f"{pre} {key}\n"
+    def _add_head(self, head: str, level: int) -> None:
+        """Add a heading to the markdown text."""
+        self._add_md_new_line()
+        self._md_text += f"{'#' * level} {head}"
 
     def _add_md_new_line(self) -> None:
+        """Add a new line to the markdown text."""
         self._md_text += "\n\n"
 
-    def _add_three_hyphen(self) -> None:
-        """Add three hyphen to note's metadata."""
+    def _add_three_hyphen_up(
+        self,
+    ) -> None:
+        """Add three hyphens to the note's metadata."""
         self._md_text += "---\n"
 
+    def _add_three_hyphen_down(
+        self,
+    ) -> None:
+        self._md_text += "---"
+
     def _add_synonym(self) -> None:
+        """Add synonyms to the note's metadata."""
         if synonym := self._meta.get("stems", []):
             self._md_text += f"aliases: {', '.join(synonym)}\n"
 
-    def get_md_text(self) -> str:
-        # note's metadata
-        self._add_three_hyphen()
-        self._add_synonym()
-        self._add_three_hyphen()
-
-        self._add_head(self._meta["id"], 1)
-        self._add_all_sense()
-        return self._md_text
-
 
 def _md_text_color(text: str, color: str = "#FFB8EBA6") -> str:
+    """Add color to text in the markdown format."""
     return f'<mark style="background: {color};">{text}</mark>' if text else ""
-
-
-def _convert_dict_to_defaultdict(_dict: dict[Any, Any]) -> defaultdict[Any, Any]:
-    return defaultdict(str, zip(_dict.keys(), _dict.values(), strict=True))
