@@ -13,6 +13,7 @@ npm install -g markdownlint-cli
 ## Usage
 
 ```bash
-
-python -m main FILE_PATH
+python -m main
 ```
+
+Then add signle word or specific path, default is `data/md/`, just input '-d'.
