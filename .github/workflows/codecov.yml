@@ -16,6 +16,8 @@ jobs:
         uses: actions/setup-python@master
         with:
           python-version: 3.11
+      - name: Add MERRIAM_WEBSTER_DICTIONARY_KEY to environment
+        run: echo "MERRIAM_WEBSTER_DICTIONARY_KEY=${{ secrets.MERRIAM_WEBSTER_DICTIONARY_KEY }}" >> $GITHUB_ENV
       - name: Generate coverage report
         run: |
           pip install -r requirements.txt
