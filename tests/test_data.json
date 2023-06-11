@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "id": "test_id",
+    "stems": ["test_alias"]
+  },
+  "def": [
+    {
+      "sseq": [
+        [
+          [
+            "sense",
+            {
+              "sn": "1",
+              "dt": [
+                ["text", "test definition"],
+                [
+                  "vis",
+                  [
+                    {
+                      "t": "test illustration"
+                    }
+                  ]
+                ]
+              ],
+              "sdsense": {
+                "sd": "sense divider",
+                "dt": [["text", "test definition"]]
+              }
+            }
+          ],
+          [
+            "pseq",
+            [
+              [
+                "sense",
+                {
+                  "sn": "1 a",
+                  "dt": [
+                    ["text", "test definition"],
+                    [
+                      "vis",
+                      [
+                        {
+                          "t": "test illustration"
+                        }
+                      ]
+                    ]
+                  ]
+                }
+              ]
+            ]
+          ]
+        ]
+      ]
+    }
+  ]
+}

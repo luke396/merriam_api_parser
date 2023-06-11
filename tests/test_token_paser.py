@@ -1,6 +1,6 @@
 import pytest
 
-from merriam_api_parser.core._token_parser import TextTokenFormatter
+from merriam_api_parser._token_parser import TextTokenFormatter
 
 
 def test_parse_token() -> None:
@@ -9,6 +9,7 @@ def test_parse_token() -> None:
     _test_url_formatting(formatter)
     _test_multiple_urls(formatter)
     _test_invalid_input(formatter)
+    _test_repr(formatter)
 
 
 def _test_basic_text_formatting(formatter: TextTokenFormatter) -> None:
@@ -51,3 +52,8 @@ def _test_multiple_urls(formatter: TextTokenFormatter) -> None:
 def _test_invalid_input(formatter: TextTokenFormatter) -> None:
     with pytest.raises(TypeError):
         formatter.parse_token(None)  # type: ignore[arg-type]
+
+
+def _test_repr(formatter: TextTokenFormatter) -> None:
+    formatter.parse_token("This is a test.")
+    assert repr(formatter) == "TextTokenFormatter(text='This is a test.')"
