@@ -17,6 +17,12 @@ jobs:
           python3 -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Add environment variables
+        run: |
+          echo "MERRIAM_WEBSTER_DICTIONARY_KEY=${{ secrets.MERRIAM_WEBSTER_DICTIONARY_KEY }}" >> $GITHUB_ENV
+          echo "SOURCERY_TOKEN=${{secrets.SOURCERY_TOKEN}}" >> $GITHUB_ENV
+          sourcery login --token $SOURCERY_TOKEN
+
       - name: Update pre-commit
         run: |
           pre-commit autoupdate
