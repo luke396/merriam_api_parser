@@ -16,4 +16,4 @@ npm install -g markdownlint-cli
 python -m main
 ```
 
-Then add signle word or specific path, default is `data/md/`, just input '-d'.
+Then add single word or specific path, default is `data/md/`, just input '-d'.
