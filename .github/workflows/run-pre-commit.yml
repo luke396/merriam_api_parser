@@ -1,0 +1,27 @@
+name: "Run pre-commit"
+on: [push]
+jobs:
+  pre-commit:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@master
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Update pre-commit
+        run: |
+          pre-commit autoupdate
+
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.0
+        with:
+          extra_args: --verbose --all-files
