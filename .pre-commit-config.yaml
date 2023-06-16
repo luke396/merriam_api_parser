@@ -64,6 +64,12 @@ repos:
             "--load-plugins=pylint.extensions.docparams", # Load an extension
           ]
 
+      - id: pyright
+        name: pyright
+        entry: pyright
+        language: node
+        types: [python]
+
       - id: pytest
         name: pytest
         entry: pytest

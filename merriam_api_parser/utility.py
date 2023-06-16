@@ -86,7 +86,7 @@ async def main() -> None:
     user_input = process_user_input(get_user_input())
 
     if isinstance(user_input, Path):  # TODO: increase coverage
-        path: Path = user_input
+        path = user_input
         tasks = [
             request_response.process_word(word) for word in Reader(path).get_md_names()
         ]
@@ -97,6 +97,10 @@ async def main() -> None:
         path = Path("data/md/")
         word, response = await request_response.process_word(user_input)
         Writer(path / f"{word}.md").write(response)
+
+    else:
+        msg = "Invalid user input"
+        raise TypeError(msg)
 
     MdFormatter(path).md_format()
 
