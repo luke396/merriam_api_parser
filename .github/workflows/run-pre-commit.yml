@@ -22,10 +22,6 @@ jobs:
           echo "MERRIAM_WEBSTER_DICTIONARY_KEY=${{ secrets.MERRIAM_WEBSTER_DICTIONARY_KEY }}" >> $GITHUB_ENV
           sourcery login --token ${{secrets.SOURCERY_TOKEN}}
 
-      - name: Update pre-commit
-        run: |
-          pre-commit autoupdate
-
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
         with:
