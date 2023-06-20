@@ -45,23 +45,17 @@ class JsonParser:
         single_sense: list[Any],
     ) -> tuple[str, dict[str, Any]]:
         """Parse a single 'sense' element."""
-        single_sense_ele: defaultdict[str, str | list[list[str | Any]]] = defaultdict(
-            str,
-            single_sense[1],
-        )
-        sense_number: str = single_sense_ele.get("sn", "")  # type: ignore
-        definition_text = self._parse_dt(single_sense_ele.get("dt", []))  # type: ignore
+        single_sense_ele = defaultdict(str, single_sense[1])
+        sense_number = single_sense_ele.get("sn", "")
+        definition_text = self._parse_dt(single_sense_ele.get("dt", []))
         definition_text["text"] = self.token_parser.parse_token(definition_text["text"])
         definition_text["vis"] = [
             self.token_parser.parse_token(i["t"]) for i in definition_text["vis"]
         ]
 
         if single_sense_ele.get("sdsense") is not None:
-            divided_sense: defaultdict[str, str | list[list[str | Any]]] = defaultdict(
-                str,
-                single_sense_ele["sdsense"],  # type: ignore
-            )
-            divided_sense_dt = self._parse_dt(divided_sense["dt"])  # type: ignore
+            divided_sense = defaultdict(str, single_sense_ele["sdsense"])
+            divided_sense_dt = self._parse_dt(divided_sense["dt"])
             definition_text["sdsense_sd"] = divided_sense["sd"]
             definition_text["sdsense_text"] = self.token_parser.parse_token(
                 divided_sense_dt["text"],
@@ -70,7 +64,7 @@ class JsonParser:
         return sense_number, definition_text
 
     def _parse_dt(self, origin_dt: list[list[str | Any]]) -> dict[str, Any]:
-        """Parse a 'dt' element, return a dictionary."""
+        """Parse a 'dt' element."""
         dt_ele = self._name_ele_constructor(origin_dt)
         return {"text": dt_ele.get("text", ""), "vis": dt_ele.get("vis", "")}
 
