@@ -17,7 +17,7 @@ dependencies = [
   "pytest-mock == 3.11.1",
   "pyupgrade == 3.7.0",
   "requests == 2.31.0",
-  "ruff == 0.0.272",
+  "ruff == 0.0.274",
   "sourcery == 1.4.0",
   "types-requests == 2.31.0.1",
   "types-urllib3 == 1.26.25.13",
