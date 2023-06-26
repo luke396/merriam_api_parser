@@ -22,6 +22,12 @@ jobs:
           MERRIAM_WEBSTER_DICTIONARY_KEY: ${{ secrets.MERRIAM_WEBSTER_DICTIONARY_KEY }}
           SOURCERY_TOKEN: ${{secrets.SOURCERY_TOKEN}}
         run: |
+          if [ -z "$sourcery_token" ]; then
+            echo "SOURCERY_TOKEN is either unset or empty"
+          else
+            echo "SOURCERY_TOKEN is set and not empty"
+          fi
+
           sourcery login --token SOURCERY_TOKEN
 
       - name: Run pre-commit
