@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.272
+    rev: v0.0.275
     hooks:
       - id: ruff
         args: [--exit-non-zero-on-fix]
@@ -82,4 +82,6 @@ repos:
     rev: v1.4.0
     hooks:
       - id: sourcery
+        stages:
+          - manual
         args: [--diff=git diff HEAD, --fix, --no-summary]

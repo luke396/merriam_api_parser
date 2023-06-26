@@ -1,5 +1,6 @@
 """Format a string and return md-formatted text."""
 import re
+from typing import ClassVar
 
 
 class TextTokenFormatter:
@@ -9,7 +10,7 @@ class TextTokenFormatter:
     BOLD_COLON_PATTERN: str = r"{bc}"
     WI_PATTERN: str = r"{wi}(\w+){/wi}"
     WORD_PATTERN: str = r"(\w*\-*\ *\w*)"
-    URL_PATTERNS: list[str] = [
+    URL_PATTERNS: ClassVar[list[str]] = [
         r"{(a_link)\|" + WORD_PATTERN + r"}",
         r"{(sx)\|" + WORD_PATTERN + r"\|" + WORD_PATTERN + r"\|}",
         r"{(d_link)\|" + WORD_PATTERN + r"\|" + WORD_PATTERN + r"}",
