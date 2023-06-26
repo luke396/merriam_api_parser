@@ -19,7 +19,7 @@ jobs:
           python-version: 3.11
 
       - name: Set fake MERRIAM_WEBSTER_DICTIONARY_KEY for test
-        run: echo "{MERRIAM_WEBSTER_DICTIONARY_KEY}={123456789abc}" >> "$GITHUB_ENV"
+        run: echo "MERRIAM_WEBSTER_DICTIONARY_KEY=123456789abc" >> "$GITHUB_ENV"
 
       - name: Generate coverage report
         run: |
