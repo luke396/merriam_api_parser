@@ -1,9 +1,19 @@
 name: "Run pre-commit"
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
   pre-commit:
     runs-on: ubuntu-20.04
     steps:
+      - name: Add environment variables
+        env:
+          MERRIAM_WEBSTER_DICTIONARY_KEY: ${{ secrets.MERRIAM_WEBSTER_DICTIONARY_KEY }}
+          SOURCERY_TOKEN: ${{secrets.SOURCERY_TOKEN}}
+        run: |
+          sourcery login --token SOURCERY_TOKEN
+
       - name: Checkout
         uses: actions/checkout@master
 
@@ -16,11 +26,6 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      - name: Add environment variables
-        run: |
-          echo "MERRIAM_WEBSTER_DICTIONARY_KEY=${{ secrets.MERRIAM_WEBSTER_DICTIONARY_KEY }}" >> $GITHUB_ENV
-          sourcery login --token ${{secrets.SOURCERY_TOKEN}}
 
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
