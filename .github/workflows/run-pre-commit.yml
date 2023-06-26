@@ -24,9 +24,9 @@ jobs:
         run: |
           if [ -z "$SOURCERY_TOKEN" ]; then
             echo "SOURCERY_TOKEN is either unset or empty"
-            echo $SOURCERY_TOKEN
           else
             echo "SOURCERY_TOKEN is set and not empty"
+            echo $SOURCERY_TOKEN
           fi
 
           sourcery login --token SOURCERY_TOKEN
