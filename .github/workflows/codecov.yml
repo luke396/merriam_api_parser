@@ -18,6 +18,9 @@ jobs:
         with:
           python-version: 3.11
 
+      - name: Set fake MERRIAM_WEBSTER_DICTIONARY_KEY
+        run: echo "MERRIAM_WEBSTER_DICTIONARY_KEY = 123456789abc"
+
       - name: Generate coverage report
         run: |
           pip install -r requirements.txt
