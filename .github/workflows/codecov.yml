@@ -18,15 +18,11 @@ jobs:
         with:
           python-version: 3.11
 
-      - name: Add MERRIAM_WEBSTER_DICTIONARY_KEY to environment
-        env:
-          MERRIAM_WEBSTER_DICTIONARY_KEY: ${{ secrets.MERRIAM_WEBSTER_DICTIONARY_KEY }}
-        run: echo "MERRIAM_WEBSTER_DICTIONARY_KEY=MERRIAM_WEBSTER_DICTIONARY_KEY" >> $GITHUB_ENV
-
       - name: Generate coverage report
         run: |
           pip install -r requirements.txt
           pytest --cov=./
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
