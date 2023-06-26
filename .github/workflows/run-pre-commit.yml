@@ -23,6 +23,7 @@ jobs:
           SOURCERY_TOKEN: ${{secrets.SOURCERY_TOKEN}}
         run: |
           sourcery login --token SOURCERY_TOKEN
+
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
         with:

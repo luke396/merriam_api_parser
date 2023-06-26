@@ -1,8 +1,5 @@
 name: Codecov
-on:
-  push:
-    branches:
-      - main
+on: [push]
 jobs:
   run:
     runs-on: ${{ matrix.os }}
@@ -15,12 +12,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
+
       - name: Setup Python
         uses: actions/setup-python@master
         with:
           python-version: 3.11
+
       - name: Add MERRIAM_WEBSTER_DICTIONARY_KEY to environment
-        run: echo "MERRIAM_WEBSTER_DICTIONARY_KEY=${{ secrets.MERRIAM_WEBSTER_DICTIONARY_KEY }}" >> $GITHUB_ENV
+        env:
+          MERRIAM_WEBSTER_DICTIONARY_KEY: ${{ secrets.MERRIAM_WEBSTER_DICTIONARY_KEY }}
+        run: echo "MERRIAM_WEBSTER_DICTIONARY_KEY=MERRIAM_WEBSTER_DICTIONARY_KEY" >> $GITHUB_ENV
+
       - name: Generate coverage report
         run: |
           pip install -r requirements.txt
