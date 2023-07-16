@@ -77,11 +77,3 @@ repos:
         types: [python]
         pass_filenames: false
         always_run: true
-
-  - repo: https://github.com/sourcery-ai/sourcery
-    rev: v1.5.0
-    hooks:
-      - id: sourcery
-        stages:
-          - manual
-        args: [--diff=git diff HEAD, --fix, --no-summary]
