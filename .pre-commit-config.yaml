@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.0.275
+    rev: v0.0.277
     hooks:
       - id: ruff
         args: [--exit-non-zero-on-fix]
@@ -12,13 +12,13 @@ repos:
         types_or: [python, markdown, json, yaml]
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.7.0
+    rev: v3.9.0
     hooks:
       - id: pyupgrade
         args: [--py311-plus]
 
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v2.5.1
+    rev: v3.0.0
     hooks:
       - id: add-trailing-comma
         args: [--py36-plus]
