@@ -11,4 +11,4 @@ pyupgrade==3.9.0
 requests==2.31.0
 ruff==0.0.278
 types-requests==2.31.0.2
-types-urllib3==1.26.25.13
+types-urllib3==1.26.25.14
