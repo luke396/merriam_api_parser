@@ -2,7 +2,7 @@ black==23.7.0
 mypy==1.4.1
 pre-commit==3.3.3
 pylint==2.17.4
-pyright == 1.1.317
+pyright == 1.1.318
 pytest==7.4.0
 pytest-asyncio==0.21.1
 pytest-cov==4.1.0
@@ -10,5 +10,5 @@ pytest-mock==3.11.1
 pyupgrade==3.9.0
 requests==2.31.0
 ruff==0.0.278
-types-requests==2.31.0.1
-types-urllib3==1.26.25.13
+types-requests==2.31.0.2
+types-urllib3==1.26.25.14
