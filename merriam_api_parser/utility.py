@@ -24,15 +24,18 @@ class MerriamWebsterAPI:
         """Parse response to md-formatted text."""
         url: str = f"{self.API_URL}/{word}?key={self.api_key}"
         try:
-            response: requests.Response = requests.get(url, timeout=5)
+            response: requests.Response = requests.get(url, timeout=3000)
             response.raise_for_status()
-            json_res: list[dict[str, Any]] = json.loads(response.text)
-            return JsonParser(
-                json_res[0],
-            ).get_md_text()  # TODO: json_res[0] maybe more specific
+        except requests.exceptions.HTTPError:
+            response = requests.get(url, timeout=3000)
         except requests.exceptions.RequestException:
             logging.exception("Failed to get response for %s:", word)
             return ""
+
+        json_res: list[dict[str, Any]] = json.loads(response.text)
+        return JsonParser(
+            json_res[0],
+        ).get_md_text()  # TODO: json_res[0] maybe more specific
 
     async def process_word(self, word: str) -> tuple[str, str]:
         """Process a single word and return the response."""
