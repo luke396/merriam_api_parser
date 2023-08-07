@@ -15,9 +15,9 @@ dependencies = [
   "pytest-asyncio == 0.21.1",
   "pytest-cov == 4.1.0",
   "pytest-mock == 3.11.1",
-  "pyupgrade == 3.9.0",
+  "pyupgrade == 3.10.1",
   "requests == 2.31.0",
-  "ruff == 0.0.280",
+  "ruff == 0.0.282",
   "types-requests == 2.31.0.2",
   "types-urllib3 == 1.26.25.14",
 ]
