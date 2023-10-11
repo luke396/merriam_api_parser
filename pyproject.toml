@@ -6,18 +6,18 @@ readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "Zhengbo Wang", email = "lw7205675@gmail.com" }]
 dependencies = [
-  "black == 23.7.0",
+  "black == 23.9.1",
   "mypy == 1.5.1",
-  "pre-commit == 3.3.3",
+  "pre-commit == 3.4.0",
   "pylint == 2.17.5",
-  "pyright == 1.1.325",
   "pytest == 7.4.2",
+  "pyright == 1.1.330.post0",
   "pytest-asyncio == 0.21.1",
   "pytest-cov == 4.1.0",
   "pytest-mock == 3.11.1",
   "pyupgrade == 3.10.1",
   "requests == 2.31.0",
-  "ruff == 0.0.287",
+  "ruff == 0.0.292",
   "types-requests == 2.31.0.2",
   "types-urllib3 == 1.26.25.14",
 ]
