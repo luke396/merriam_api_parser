@@ -18,7 +18,7 @@ dependencies = [
   "pyupgrade == 3.10.1",
   "requests == 2.31.0",
   "ruff == 0.0.292",
-  "types-requests == 2.31.0.2",
+  "types-requests == 2.31.0.10",
   "types-urllib3 == 1.26.25.14",
 ]
 requires-python = ">=3.11"
